@@ -1,8 +1,8 @@
 
 export default function Home() {
   return (
-    <main>
+    <section>
       Hello world!
-    </main>
+    </section>
   )
 }
