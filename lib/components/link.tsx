@@ -7,9 +7,9 @@ interface Props {
   children: string;
 }
 
-export function Link({href,children}:Props) {
+export function Link({ href, children }: Props) {
   return (
-    <NextLink href={href} passHref legacyBehavior><RadixLink>{ children}</RadixLink></NextLink>
+    <NextLink href={href} passHref legacyBehavior><RadixLink>{children}</RadixLink></NextLink>
   )
 }
 
