@@ -33,3 +33,5 @@ export default async function Issues() {
     </Table.Root>
   </section>
 }
+
+export const dynamic = 'force-dynamic';
