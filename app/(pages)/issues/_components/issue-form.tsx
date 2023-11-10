@@ -7,15 +7,14 @@ import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueSchema } from "@/lib/validation-schemas";
+import { issueSchema } from "@/lib/validation-schemas";
 import z from 'zod'
-import { ErrorMessage } from '@/lib/components/error-message';
-import { Spinner } from '@/lib/components/spinner';
+import { ErrorMessage, Spinner } from '@/lib/components';
 
 import 'easymde/dist/easymde.min.css';
 import { Issue } from '@prisma/client';
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 interface Props {
   issue?: Issue
@@ -23,7 +22,7 @@ interface Props {
 
 export default function IssueForm({ issue }: Props) {
   const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema)
+    resolver: zodResolver(issueSchema)
   });
   const router = useRouter();
   const [error, setError] = React.useState('');
@@ -31,14 +30,27 @@ export default function IssueForm({ issue }: Props) {
 
   async function handleSubmission(data: IssueFormData) {
     setIsSubmitting(true);
-    try {
-      await axios.post('/api/issues', data);
-      router.push('/issues');
-      setIsSubmitting(false);
-    } catch (error) {
-      setError('An unexpected error occured');
-      setIsSubmitting(false);
+    if (issue) {
+      try {
+        await axios.patch(`/api/issues/${issue.id}`, data)
+        setIsSubmitting(false);
+      }
+      catch (error) {
+        setError('An unexpected error occured');
+        setIsSubmitting(false);
+      }
     }
+    else {
+      try {
+        await axios.post('/api/issues', data);
+        router.push('/issues');
+        setIsSubmitting(false);
+      } catch (error) {
+        setError('An unexpected error occured');
+        setIsSubmitting(false);
+      }
+    }
+
   }
   return (
     <section className="max-w-xl space-y-3">
