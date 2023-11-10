@@ -2,7 +2,6 @@
 import React from 'react'
 import { Button, TextField, Callout, Text } from '@radix-ui/themes';
 import SimpleMde from 'react-simplemde-editor';
-import 'easymde/dist/easymde.min.css';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -10,12 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from "@/lib/validation-schemas";
 import z from 'zod'
 import { ErrorMessage } from '@/lib/components/error-message';
-import {Spinner} from '@/lib/components/spinner';
+import { Spinner } from '@/lib/components/spinner';
+
+import 'easymde/dist/easymde.min.css';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 export default function NewIssue() {
-  const { register, control, handleSubmit, formState: {errors} } = useForm<IssueForm>({
+  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema)
   });
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function NewIssue() {
       setError('An unexpected error occured');
       setIsSubmitting(false);
     }
-}
+  }
   return (
     <section className="max-w-xl space-y-3">
       {error && <Callout.Root color="red" className="mb-5">

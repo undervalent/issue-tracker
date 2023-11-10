@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Box } from '@radix-ui/themes';
-import Skeleton from 'react-loading-skeleton';
+import { Skeleton } from '@/lib/components';
 import { Card, Flex } from '@radix-ui/themes';
 
 export function NewIssueLoading() {

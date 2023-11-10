@@ -6,7 +6,7 @@ interface Props {
   status: Status
 }
 
-const statusMap: Record<Status, { label: string, color: 'red'|'violet'|'green' }> = {
+const statusMap: Record<Status, { label: string, color: 'red' | 'violet' | 'green' }> = {
   OPEN: {
     label: 'Open',
     color: 'red'
@@ -17,7 +17,7 @@ const statusMap: Record<Status, { label: string, color: 'red'|'violet'|'green' }
   },
   IN_PROGRESS: {
     label: 'In progress',
-    color:'violet'
+    color: 'violet'
   }
 
 }
@@ -28,3 +28,5 @@ export function IssueStatusBadge({ status }: Props) {
     <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
   )
 }
+
+export default IssueStatusBadge;
