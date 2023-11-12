@@ -4,6 +4,6 @@ import { Pencil2Icon } from '@radix-ui/react-icons';
 
 export default function EditButton({ issueId }: { issueId: number }) {
   return (
-    <Link href={`/issues/${issueId}/edit`}> <Pencil2Icon /> Edit Issue</Link>
+    <Link href={`/issues/edit/${issueId}`}> <Pencil2Icon /> Edit Issue</Link>
   )
 }
