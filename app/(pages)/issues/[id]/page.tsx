@@ -34,3 +34,4 @@ export async function IssueDetail({ params }: Props) {
 }
 
 export default IssueDetail
+
