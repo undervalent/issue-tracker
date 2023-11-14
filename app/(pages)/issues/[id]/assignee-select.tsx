@@ -1,9 +1,9 @@
 "use client"
-import React from 'react'
-import { Select } from '@radix-ui/themes'
-import { User } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/lib/components';
+import { User } from '@prisma/client';
+import { Select } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 
 import axios from 'axios';
 
