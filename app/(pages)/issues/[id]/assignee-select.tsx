@@ -7,16 +7,14 @@ import axios from 'axios';
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-
 function useAssigneeData({ issue }: { issue: Issue }) {
 
   const { data: users, error, isLoading } = useQuery<User[]>({
     queryKey: ['users'],
     queryFn: () => axios.get<User[]>('/api/users').then(res => res.data),
-    staleTime: 60 * 1000,
+    staleTime: 60 * 1000, //60 seconds
     retry: 3
-
-  })
+  });
 
   return [
     {
