@@ -39,11 +39,12 @@ const columns: {
 export default async function Issues({ searchParams }: Props) {
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined;
-
+  const orderBy = columns.map(column => column.value).includes(searchParams.orderBy) ? { [searchParams.orderBy]: 'asc' } : undefined
   const issues = await prisma.issue.findMany({
     where: {
       status
-    }
+    },
+    orderBy
   });
 
   return <section>
