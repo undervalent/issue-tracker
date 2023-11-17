@@ -2,14 +2,39 @@ import { Table } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
 import { IssueStatusBadge, Link } from "@/lib/components";
 import { IssueActions } from './_components/issue-actions';
-import { Status } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
+import NextLink from 'next/link'
+import { ArrowUpIcon } from "@radix-ui/react-icons";
 
 interface Props {
 
   searchParams: {
     status: Status
+    orderBy: keyof Issue
   }
 }
+
+const columns: {
+  label: string;
+  value: keyof Issue;
+  className?: string;
+}[] = [
+    {
+      label: 'Issue',
+      value: 'title'
+    },
+    {
+      label: 'Status',
+      value: 'status',
+      className: "hidden md:table-cell"
+    },
+    {
+      label: 'Created',
+      value: 'createdAt',
+      className: "hidden md:table-cell"
+    },
+  ]
+
 
 export default async function Issues({ searchParams }: Props) {
   const statuses = Object.values(Status);
@@ -26,12 +51,21 @@ export default async function Issues({ searchParams }: Props) {
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>Issue
+          {
+            columns.map(column => (
+              <Table.ColumnHeaderCell
+                key={column.value}
+                className={column.className}>
+                <NextLink href={{
+                  query: { ...searchParams, orderBy: column.value }
+                }}>
+                  {column.label}
+                </NextLink>
+                {column.value === searchParams.orderBy && <ArrowUpIcon className="inline" />}
+              </Table.ColumnHeaderCell>
+            ))
+          }
 
-          </Table.ColumnHeaderCell>
-
-          <Table.ColumnHeaderCell className="hidden md:table-cell">Status</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="hidden md:table-cell">Created</Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -46,7 +80,7 @@ export default async function Issues({ searchParams }: Props) {
         </Table.Row>)}
       </Table.Body>
     </Table.Root>
-  </section>
+  </section >
 }
 
 export const dynamic = 'force-dynamic';
