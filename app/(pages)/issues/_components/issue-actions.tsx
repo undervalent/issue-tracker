@@ -1,11 +1,15 @@
+import { Flex } from '@radix-ui/themes';
 import Link from 'next/link'
 import React from 'react'
+import IssueStatusFitler from './issue-status-filter';
 
 export function IssueActions() {
   return (
-    <header className="mb-5">
+    <Flex mb="5" justify="between">
+      <IssueStatusFitler />
       <Link href="/issues/new">New issue</Link>
-    </header>
+
+    </Flex>
   )
 }
 
