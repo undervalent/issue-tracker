@@ -5,12 +5,19 @@ import { IssueActions } from './_components/issue-actions';
 import { Issue, Status } from "@prisma/client";
 import NextLink from 'next/link'
 import { ArrowUpIcon } from "@radix-ui/react-icons";
-
+import { useSearchParams } from "next/navigation";
+import Pagination from "@/lib/components/pagination";
+interface SearchParams {
+  status: Status
+  orderBy: keyof Issue
+  page: string
+}
 interface Props {
 
   searchParams: {
     status: Status
     orderBy: keyof Issue
+    page: string
   }
 }
 
@@ -34,18 +41,29 @@ const columns: {
       className: "hidden md:table-cell"
     },
   ]
+async function useIssues(searchParams: SearchParams) {
 
-
-export default async function Issues({ searchParams }: Props) {
   const statuses = Object.values(Status);
   const status = statuses.includes(searchParams.status) ? searchParams.status : undefined;
   const orderBy = columns.map(column => column.value).includes(searchParams.orderBy) ? { [searchParams.orderBy]: 'asc' } : undefined
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 10;
+  const where = { status };
+
   const issues = await prisma.issue.findMany({
-    where: {
-      status
-    },
-    orderBy
+    where,
+    orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize
   });
+
+  const issueCount = await prisma.issue.count({ where });
+
+  return [{ issues, issueCount, page, pageSize }]
+}
+
+export default async function Issues({ searchParams }: Props) {
+  const [{ issues, issueCount, page, pageSize }] = await useIssues(searchParams)
 
   return <section>
     <IssueActions />
@@ -81,6 +99,7 @@ export default async function Issues({ searchParams }: Props) {
         </Table.Row>)}
       </Table.Body>
     </Table.Root>
+    <Pagination itemCount={issueCount} currentPage={page} pageSize={pageSize} />
   </section >
 }
 
