@@ -37,9 +37,9 @@ function useStatusFilter() {
 
 export default function IssueStatusFitler() {
   const [{ defaultValue }, { handleStatusChange }] = useStatusFilter();
-
   return (
     <Select.Root
+
       defaultValue={defaultValue}
       onValueChange={handleStatusChange}>
       <Select.Trigger placeholder='Filter by status' />
