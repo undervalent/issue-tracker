@@ -5,7 +5,7 @@ import IssueStatusFitler from './issue-status-filter';
 
 export function IssueActions() {
   return (
-    <Flex mb="5" justify="between">
+    <Flex justify="between">
       <IssueStatusFitler />
       <Link href="/issues/new">New issue</Link>
 
