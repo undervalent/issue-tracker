@@ -1,5 +1,6 @@
 import LatestIssues from "./latest-issues"
 import IssueSummary from "./issue-summary"
+import IssueChart from "./issue-chart"
 import prisma from "@/prisma/client"
 
 async function useIssueCounts() {
@@ -19,5 +20,6 @@ export default async function Dashboard() {
   return <section>
     <LatestIssues />
     <IssueSummary open={open} closed={closed} inProgress={inProgress} />
+    <IssueChart open={open} closed={closed} inProgress={inProgress} />
   </section>
 }

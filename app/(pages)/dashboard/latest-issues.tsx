@@ -14,7 +14,7 @@ export default async function LatestIssues() {
       assignedToUser: true
     }
   });
-  console.log('ISSUES -->', issues)
+
   return (
     <Card>
       <Heading size="4" mb="5">
