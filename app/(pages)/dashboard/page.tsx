@@ -1,3 +1,8 @@
+import LatestIssues from "./latest-issues"
+
+
 export default function Dashboard() {
-  return <section>Dashbaord</section>
+  return <section>
+    <LatestIssues />
+  </section>
 }
