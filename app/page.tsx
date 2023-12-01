@@ -1,8 +1,14 @@
+import Pagination from "@/lib/components/pagination";
 
-export default function Home() {
+export default function Home({ searchParams }: {
+  searchParams: {
+    page: string
+  }
+}) {
+
   return (
-    <main>
-      Hello world!
-    </main>
+    <section>
+      <Pagination itemCount={100} currentPage={parseInt(searchParams.page)} pageSize={10} />
+    </section>
   )
 }
